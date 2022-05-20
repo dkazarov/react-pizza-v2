@@ -1,4 +1,4 @@
-import './App.css';
+import './scss/app.scss';
 
 function App() {
   return (
