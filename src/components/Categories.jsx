@@ -6,17 +6,13 @@ export const Categories = () => {
 
   const categiries = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-  const onClickCategory = (index) => {
-    setActiveIndex(index);
-  };
-
   return (
     <div className='categories'>
       <ul>
         {categiries.map((items, index) => (
           <li
             key={nanoid()}
-            onClick={() => onClickCategory(index)}
+            onClick={() => setActiveIndex(index)}
             className={activeIndex === index ? 'active' : ''}>
             {items}
           </li>
