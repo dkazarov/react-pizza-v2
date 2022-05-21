@@ -1,4 +1,5 @@
 import React from 'react';
+import { nanoid } from 'nanoid';
 
 export const Categories = () => {
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -14,6 +15,7 @@ export const Categories = () => {
       <ul>
         {categiries.map((items, index) => (
           <li
+            key={nanoid()}
             onClick={() => onClickCategory(index)}
             className={activeIndex === index ? 'active' : ''}>
             {items}
