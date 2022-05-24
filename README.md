@@ -4,7 +4,7 @@
 
 ### Frontend: React 18, SCSS, Html
 
-### Libraries: [nanoid](https://yarnpkg.com/package/nanoid)
+### Libraries: [Nanoid](https://yarnpkg.com/package/nanoid),[React-content-loader](https://skeletonreact.com/)
 
 ### Backend: [mockapi](https://mockapi.io/)
 
