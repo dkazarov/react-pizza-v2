@@ -17,19 +17,22 @@ const Home = () => {
         setItems(products);
         setIsLoading(false);
       });
+    window.scrollTo(0, 0);
   }, []);
 
   return (
     <>
-      <div className='content__top'>
-        <Categories />
-        <Sort />
-      </div>
-      <h2 className='content__title'>Все пиццы</h2>
-      <div className='content__items'>
-        {isLoading
-          ? [...new Array(12)].map(() => <Skeleton key={nanoid()} />)
-          : items.map((obj) => <PizzaBlock key={nanoid()} {...obj} />)}
+      <div className='container'>
+        <div className='content__top'>
+          <Categories />
+          <Sort />
+        </div>
+        <h2 className='content__title'>Все пиццы</h2>
+        <div className='content__items'>
+          {isLoading
+            ? [...new Array(12)].map(() => <Skeleton key={nanoid()} />)
+            : items.map((obj) => <PizzaBlock key={nanoid()} {...obj} />)}
+        </div>
       </div>
     </>
   );
