@@ -5,7 +5,7 @@ import { Categories } from '../components/Categories';
 import { Sort } from '../components/Sort';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
-import { Pagination } from '../components/Pagination';
+import { PaginationServer } from '../components/PaginationServer';
 
 const Home = ({ searchValue }) => {
   const [items, setItems] = React.useState([]);
@@ -49,7 +49,7 @@ const Home = ({ searchValue }) => {
         <h2 className='content__title'>Все пиццы</h2>
         <div className='content__items'>{isLoading ? skeletons : pizzas}</div>
       </div>
-      <Pagination onChangePage={(numberPage) => setCurrentPage(numberPage)} />
+      <PaginationServer onChangePage={(numberPage) => setCurrentPage(numberPage)} />
     </>
   );
 };
