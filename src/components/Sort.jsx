@@ -1,15 +1,20 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 
-export const Sort = () => {
+export const Sort = ({ sortType, onClickSortType }) => {
   const [openSortPopup, setOpenSortPopup] = React.useState(false);
-  const [activeSortItem, setActiveSortItem] = React.useState(0);
 
-  const sortList = ['популярности', 'цене', 'алфавиту'];
-  const sortName = sortList[activeSortItem];
+  const sortList = [
+    { name: 'популярности (desc)', sortProperty: 'rating' },
+    { name: 'популярности (asc)', sortProperty: '-rating' },
+    { name: 'цене (desc)', sortProperty: 'price' },
+    { name: 'цене (asc)', sortProperty: '-price' },
+    { name: 'алфавиту (desc)', sortProperty: 'title' },
+    { name: 'алфавиту (asc)', sortProperty: '-title' },
+  ];
 
   const onClickSortItem = (index) => {
-    setActiveSortItem(index);
+    onClickSortType(index);
     setOpenSortPopup(false);
   };
 
@@ -28,17 +33,17 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка&nbsp;по:</b>
-        <span onClick={() => setOpenSortPopup(!openSortPopup)}>{sortName}</span>
+        <span onClick={() => setOpenSortPopup(!openSortPopup)}>{sortType.name}</span>
       </div>
       {openSortPopup && (
         <div className='sort__popup'>
           <ul>
-            {sortList.map((items, index) => (
+            {sortList.map((obj, index) => (
               <li
                 key={nanoid()}
-                className={activeSortItem === index ? 'active' : ''}
-                onClick={() => onClickSortItem(index)}>
-                {items}
+                className={sortType.sortProperty === obj.sortProperty ? 'active' : ''}
+                onClick={() => onClickSortItem(obj)}>
+                {obj.name}
               </li>
             ))}
           </ul>
