@@ -11,6 +11,7 @@ export const PaginationServer = ({ limitItemsOnPage, items, paginate }) => {
     totalCountPages.push(i);
   }
 
+  // FrontPagination
   return (
     <ul className={styles.root}>
       {totalCountPages.map((pages) => (
