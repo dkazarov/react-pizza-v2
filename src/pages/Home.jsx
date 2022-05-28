@@ -1,6 +1,8 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 import { SearchContext } from '../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 import { Categories } from '../components/Categories';
 import { Sort } from '../components/Sort';
@@ -9,10 +11,13 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import { PaginationServer } from '../components/PaginationServer';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const categoryId = useSelector((state) => state.filter.categoryId);
+  
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryId, setCategoryId] = React.useState(0);
+  // const [categoryId, setCategoryId] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [sortType, setSortType] = React.useState({
     name: 'популярности',
@@ -45,7 +50,7 @@ const Home = () => {
     <>
       <div className='container'>
         <div className='content__top'>
-          <Categories categoryId={categoryId} onClickCategory={(i) => setCategoryId(i)} />
+          <Categories categoryId={categoryId} onClickCategory={(i) => dispatch(setCategoryId(i))} />
           <Sort sortType={sortType} onClickSortType={(i) => setSortType(i)} />
         </div>
         <h2 className='content__title'>Все пиццы</h2>
