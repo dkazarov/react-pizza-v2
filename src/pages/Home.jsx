@@ -2,7 +2,7 @@ import React from 'react';
 import { nanoid } from 'nanoid';
 import { SearchContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import axios from 'axios';
 
 import { Categories } from '../components/Categories';
@@ -15,11 +15,12 @@ const Home = () => {
   const dispatch = useDispatch();
   const categoryId = useSelector((state) => state.filter.categoryId);
   const sortType = useSelector((state) => state.filter.sort.sortProperty);
+  const currentPage = useSelector((state) => state.filter.currentPage);
 
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [currentPage, setCurrentPage] = React.useState(1);
+  // const [currentPage, setCurrentPage] = React.useState(1);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -37,12 +38,16 @@ const Home = () => {
         setItems(response.data);
         setIsLoading(false);
       });
-      
+
     window.scrollTo(0, 0);
   }, [categoryId, sortType, searchValue, currentPage]);
 
   const pizzas = items.map((obj) => <PizzaBlock key={nanoid()} {...obj} />);
   const skeletons = [...new Array(12)].map(() => <Skeleton key={nanoid()} />);
+
+  const onChangePage = (number) => {
+    dispatch(setCurrentPage(number));
+  };
 
   return (
     <>
@@ -54,7 +59,7 @@ const Home = () => {
         <h2 className='content__title'>Все пиццы</h2>
         <div className='content__items'>{isLoading ? skeletons : pizzas}</div>
       </div>
-      <PaginationServer onChangePage={(numberPage) => setCurrentPage(numberPage)} />
+      <PaginationServer currentPage={currentPage} onChangePage={onChangePage} />
     </>
   );
 };
