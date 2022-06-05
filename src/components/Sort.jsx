@@ -3,20 +3,22 @@ import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 
+export const sortList = [
+  { name: 'популярности (desc)', sortProperty: 'rating' },
+  { name: 'популярности (asc)', sortProperty: '-rating' },
+  { name: 'цене (desc)', sortProperty: 'price' },
+  { name: 'цене (asc)', sortProperty: '-price' },
+  { name: 'алфавиту (desc)', sortProperty: 'title' },
+  { name: 'алфавиту (asc)', sortProperty: '-title' },
+];
+
 export const Sort = () => {
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filter.sort);
 
-  const [openSortPopup, setOpenSortPopup] = React.useState(false);
+  console.log(sort);
 
-  const sortList = [
-    { name: 'популярности (desc)', sortProperty: 'rating' },
-    { name: 'популярности (asc)', sortProperty: '-rating' },
-    { name: 'цене (desc)', sortProperty: 'price' },
-    { name: 'цене (asc)', sortProperty: '-price' },
-    { name: 'алфавиту (desc)', sortProperty: 'title' },
-    { name: 'алфавиту (asc)', sortProperty: '-title' },
-  ];
+  const [openSortPopup, setOpenSortPopup] = React.useState(false);
 
   const onClickSortItem = (obj) => {
     dispatch(setSort(obj));
@@ -43,7 +45,7 @@ export const Sort = () => {
       {openSortPopup && (
         <div className='sort__popup'>
           <ul>
-            {sortList.map((obj, index) => (
+            {sortList.map((obj) => (
               <li
                 key={nanoid()}
                 className={sort.sortProperty === obj.sortProperty ? 'active' : ''}
