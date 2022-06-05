@@ -16,8 +16,6 @@ export const Sort = () => {
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filter.sort);
 
-  console.log(sort);
-
   const [openSortPopup, setOpenSortPopup] = React.useState(false);
 
   const onClickSortItem = (obj) => {

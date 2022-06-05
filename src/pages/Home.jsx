@@ -22,9 +22,13 @@ const Home = () => {
   const sortType = useSelector((state) => state.filter.sort.sortProperty);
   const currentPage = useSelector((state) => state.filter.currentPage);
 
+  const isSearch = React.useRef(false);
+  const isMounted = React.useRef(false);
+
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+
   // const [currentPage, setCurrentPage] = React.useState(1);
 
   const fetchPizzas = () => {
@@ -53,27 +57,32 @@ const Home = () => {
       const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty);
 
       dispatch(setFilters({ ...params, sort }));
-
-      console.log(sort);
+      isSearch.current = true;
     }
   }, []);
 
-  React.useEffect(() => {
-    fetchPizzas();
-
-    window.scrollTo(0, 0);
-  }, [categoryId, sortType, searchValue, currentPage]);
-
   // Parsing obj to url
   React.useEffect(() => {
-    const queryString = qs.stringify({
-      sortProperty: sortType,
-      categoryId,
-      currentPage,
-    });
-
-    navigate(`?${queryString}`);
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sortType,
+        categoryId,
+        currentPage,
+      });
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
   }, [categoryId, sortType, currentPage]);
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+
+    if (!isSearch.current) {
+      fetchPizzas();
+    }
+
+    isSearch.current = false;
+  }, [categoryId, sortType, searchValue, currentPage]);
 
   const pizzas = items.map((obj) => <PizzaBlock key={nanoid()} {...obj} />);
   const skeletons = [...new Array(12)].map(() => <Skeleton key={nanoid()} />);
