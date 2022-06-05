@@ -14,6 +14,7 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import { PaginationServer } from '../components/PaginationServer';
 
 const Home = () => {
+  // Parsing obj to url
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -25,6 +26,14 @@ const Home = () => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   // const [currentPage, setCurrentPage] = React.useState(1);
+
+  //Parse url to object
+  React.useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      console.log(params);
+    }
+  }, []);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -46,7 +55,7 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  // Parsing url
+  // Parsing obj to url
   React.useEffect(() => {
     const queryString = qs.stringify({
       sortType,
@@ -55,8 +64,6 @@ const Home = () => {
     });
 
     navigate(`?${queryString}`);
-
-    console.log(navigate);
   }, [categoryId, sortType, searchValue, currentPage]);
 
   const pizzas = items.map((obj) => <PizzaBlock key={nanoid()} {...obj} />);
