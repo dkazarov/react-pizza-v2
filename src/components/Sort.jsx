@@ -17,14 +17,28 @@ export const Sort = () => {
   const sort = useSelector((state) => state.filter.sort);
 
   const [openSortPopup, setOpenSortPopup] = React.useState(false);
+  const sortRef = React.useRef();
 
   const onClickSortItem = (obj) => {
     dispatch(setSort(obj));
     setOpenSortPopup(false);
   };
 
+  React.useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.path.includes(sortRef.current)) {
+        setOpenSortPopup(false);
+      }
+    };
+    document.body.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className='sort'>
+    <div ref={sortRef} className='sort'>
       <div className='sort__label'>
         <svg
           width='10'
