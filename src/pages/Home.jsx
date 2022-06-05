@@ -4,6 +4,8 @@ import { SearchContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import axios from 'axios';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
 
 import { Categories } from '../components/Categories';
 import { Sort } from '../components/Sort';
@@ -12,6 +14,8 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import { PaginationServer } from '../components/PaginationServer';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const categoryId = useSelector((state) => state.filter.categoryId);
   const sortType = useSelector((state) => state.filter.sort.sortProperty);
@@ -40,6 +44,19 @@ const Home = () => {
       });
 
     window.scrollTo(0, 0);
+  }, [categoryId, sortType, searchValue, currentPage]);
+
+  // Parsing url
+  React.useEffect(() => {
+    const queryString = qs.stringify({
+      sortType,
+      categoryId,
+      currentPage,
+    });
+
+    navigate(`?${queryString}`);
+
+    console.log(navigate);
   }, [categoryId, sortType, searchValue, currentPage]);
 
   const pizzas = items.map((obj) => <PizzaBlock key={nanoid()} {...obj} />);
