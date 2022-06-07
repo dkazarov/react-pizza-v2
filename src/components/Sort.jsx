@@ -32,9 +32,7 @@ export const Sort = () => {
     };
     document.body.addEventListener('click', handleClickOutside);
 
-    return () => {
-      document.body.removeEventListener('click', handleClickOutside);
-    };
+    return () => document.body.removeEventListener('click', handleClickOutside);
   }, []);
 
   return (
