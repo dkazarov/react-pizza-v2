@@ -22,14 +22,8 @@ export const cartSlice = createSlice({
       }, 0);
     },
     removeItem(state, action) {
-      state.items.filter((obj) => obj.id !== action.payload);
+      state.items = state.items.filter((obj) => obj.id !== action.payload);
     },
-    // incrementItem(state, action) {
-    //   const findItem = state.items.find((obj) => obj.id === action.payload);
-    //   if (findItem) {
-    //     findItem.count++;
-    //   }
-    // },
     decrementItem(state, action) {
       const findItem = state.items.find((obj) => obj.id === action.payload);
       if (findItem) {

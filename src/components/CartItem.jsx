@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { addItem, decrementItem } from '../redux/slices/cartSlice';
+import { addItem, decrementItem, removeItem } from '../redux/slices/cartSlice';
 import { useDispatch } from 'react-redux';
 
 const CartItem = ({ id, title, type, price, count, imageUrl }) => {
@@ -12,6 +12,12 @@ const CartItem = ({ id, title, type, price, count, imageUrl }) => {
 
   const onClickDecrement = () => {
     dispatch(decrementItem(id));
+  };
+
+  const onClickRemove = () => {
+    if (window.confirm('Are you sure you want to remove')) {
+      dispatch(removeItem(id));
+    }
   };
 
   return (
@@ -63,7 +69,7 @@ const CartItem = ({ id, title, type, price, count, imageUrl }) => {
       <div class='cart__item-price'>
         <b>{price * count}</b>
       </div>
-      <div class='cart__item-remove'>
+      <div onClick={onClickRemove} class='cart__item-remove'>
         <div class='button button--outline button--circle'>
           <svg
             width='10'
